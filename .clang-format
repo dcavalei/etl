@@ -1,57 +1,110 @@
----
 #------------------------------------
-# Configuration for clang-format v12
+# Configuration for clang-format v18
 #------------------------------------
 
+# Base configuration
+BasedOnStyle: LLVM
 Language: Cpp
+DisableFormat: false
 
-BasedOnStyle: Chromium
+#------------------------------------
+# Indentation
+#------------------------------------
+UseTab: Never
+IndentWidth: 2
+TabWidth: 2
+ContinuationIndentWidth: 2
+ConstructorInitializerIndentWidth: 2
+NamespaceIndentation: All
+AccessModifierOffset: -2
+IndentPPDirectives: BeforeHash
+IndentCaseLabels: false
 
+#------------------------------------
+# Braces and line breaks
+#------------------------------------
+BreakBeforeBraces: Allman
+BreakConstructorInitializers: BeforeComma
+BreakBeforeBinaryOperators: NonAssignment
+BreakStringLiterals: false
+AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakAfterDefinitionReturnType: None
+
+#------------------------------------
+# Short statements
+#------------------------------------
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+#------------------------------------
+# Empty lines
+#------------------------------------
+KeepEmptyLinesAtEOF: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+EmptyLineBeforeAccessModifier: Always
+EmptyLineAfterAccessModifier: Always
+SeparateDefinitionBlocks: Always
+
+#------------------------------------
+# Spacing
+#------------------------------------
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInAngles: Leave # C++03 compatibility
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpaceAfterCStyleCast: false
+SpacesInContainerLiterals: false
+SpacesInSquareBrackets: false
+
+#------------------------------------
+# Alignment
+#------------------------------------
+PointerAlignment: Left
+ReferenceAlignment: Left
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignConsecutiveMacros: false
+AlignOperands: Align
+AlignAfterOpenBracket: Align
+
+#------------------------------------
+# Line length and wrapping
+#------------------------------------
+ColumnLimit: 120
+ReflowComments: false
+
+#------------------------------------
+# Includes
+#------------------------------------
 SortIncludes: true
 IncludeBlocks: Preserve
 IncludeCategories:
   - Regex:    '^(<|")(.*/)?platform\.h(>|")$'
     Priority: 1
+  # Must be included after u8string.h -- https://github.com/ETLCPP/etl/issues/1284
+  - Regex:    '^(<|")(.*/)?basic_string_stream\.h(>|")$'
+    Priority: 99
   - Regex:    '.*'
-    Priority: 2
+    Priority: 50
 
+#------------------------------------
+# Arguments and parameters
+#------------------------------------
+BinPackArguments: false
 BinPackParameters: false
-BitFieldColonSpacing: Both
-
-BreakBeforeBraces: Allman
-BreakConstructorInitializers: BeforeComma
-
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-
-AllowAllArgumentsOnNextLine: true
-AllowAllParametersOfDeclarationOnNextLine: true
-
-ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
-ConstructorInitializerIndentWidth: '2'
-
-NamespaceIndentation: All
-IndentPPDirectives: BeforeHash
-PointerAlignment: Left
-ColumnLimit: '0'
-ContinuationIndentWidth: '2'
-UseTab: Never
-TabWidth: '2'
-IndentWidth: '2'
-AccessModifierOffset : '-2'
-IndentCaseLabels: false
-Cpp11BracedListStyle: 'true'
-AlignAfterOpenBracket: Align
-AlignConsecutiveDeclarations: true
+PackConstructorInitializers: CurrentLine
 
 #------------------------------------
-# Configurations not supported by clang-format v12
+# Templates and modern C++
 #------------------------------------
-# BreakInheritanceList: AfterComma
-# EmptyLineBeforeAccessModifier: Always
-# EmptyLineAfterAccessModifier: Always
-# ReferenceAlignment: Left
+Cpp11BracedListStyle: true
 
-...
+#------------------------------------
+# Namespaces and using declarations
+#------------------------------------
+FixNamespaceComments: true
+SortUsingDeclarations: false
