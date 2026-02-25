@@ -33,8 +33,8 @@ SOFTWARE.
 #include "error_handler.h"
 #include "exception.h"
 #include "message_types.h"
-#include "type_traits.h"
 #include "static_assert.h"
+#include "type_traits.h"
 
 #include <stdint.h>
 
@@ -62,7 +62,9 @@ namespace etl
     }
   };
 
-  class message_tag {};
+  class message_tag
+  {
+  };
 
 #if ETL_HAS_VIRTUAL_MESSAGES
   //***************************************************************************
@@ -87,7 +89,8 @@ namespace etl
   /// Virtual.
   //***************************************************************************
   template <etl::message_id_t ID_, typename TBase = etl::imessage>
-  class message : public TBase, public etl::message_tag
+  class message : public TBase
+    , public etl::message_tag
   {
   public:
 
@@ -136,7 +139,7 @@ namespace etl
     }
 
     //***********************************
-    imessage& operator =(const imessage& rhs)  ETL_NOEXCEPT
+    imessage& operator=(const imessage& rhs) ETL_NOEXCEPT
     {
       id = rhs.id;
       return *this;
@@ -155,7 +158,8 @@ namespace etl
   /// Non-virtual.
   //***************************************************************************
   template <etl::message_id_t ID_, typename TBase = etl::imessage>
-  class message : public TBase, public etl::message_tag
+  class message : public TBase
+    , public etl::message_tag
   {
   public:
 
@@ -176,7 +180,7 @@ namespace etl
     }
 
     //***********************************
-    message& operator =(const message&) ETL_NOEXCEPT
+    message& operator=(const message&) ETL_NOEXCEPT
     {
       return *this;
     }
@@ -263,6 +267,6 @@ namespace etl
   template <typename T>
   inline constexpr bool is_user_message_base_v = is_user_message_base<T>::value;
 #endif
-}
+} // namespace etl
 
 #endif

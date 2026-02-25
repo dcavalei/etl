@@ -27,12 +27,12 @@ SOFTWARE.
 #define ETL_BASE64_INCLUDED
 
 #include "platform.h"
-#include "static_assert.h"
-#include "exception.h"
-#include "error_handler.h"
-#include "type_traits.h"
 #include "enum_type.h"
+#include "error_handler.h"
+#include "exception.h"
 #include "integral_limits.h"
+#include "static_assert.h"
+#include "type_traits.h"
 
 #include <stdint.h>
 
@@ -166,7 +166,7 @@ namespace etl
 
     enum
     {
-      Invalid_Data = etl::integral_limits<int>::max,
+      Invalid_Data           = etl::integral_limits<int>::max,
       Min_Encode_Buffer_Size = 4,
       Min_Decode_Buffer_Size = 3
     };
@@ -184,9 +184,7 @@ namespace etl
     //*************************************************************************
     // Character set for RFC-1421, RFC-2045, RFC-2152 and RFC-4648
     //*************************************************************************
-    static
-    ETL_CONSTEXPR14
-    const char* character_set_1()
+    static ETL_CONSTEXPR14 const char* character_set_1()
     {
       return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     }
@@ -194,9 +192,7 @@ namespace etl
     //*************************************************************************
     // Character set for RFC-4648-URL
     //*************************************************************************
-    static
-    ETL_CONSTEXPR14
-    const char* character_set_2()
+    static ETL_CONSTEXPR14 const char* character_set_2()
     {
       return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
     }
@@ -204,9 +200,7 @@ namespace etl
     //*************************************************************************
     // Character set for RFC-3501-URL
     //*************************************************************************
-    static
-    ETL_CONSTEXPR14
-    const char* character_set_3()
+    static ETL_CONSTEXPR14 const char* character_set_3()
     {
       return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+,";
     }
@@ -214,5 +208,5 @@ namespace etl
     const char* encoder_table;
     const bool  use_padding;
   };
-}
+} // namespace etl
 #endif

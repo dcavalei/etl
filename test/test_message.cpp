@@ -37,7 +37,7 @@ SUITE(test_message)
   {
     // imessage
     //   ^
-    // MessageBase 
+    // MessageBase
     //   ^
     // etl::message<I, MessageBase>
     //   ^
@@ -49,8 +49,12 @@ SUITE(test_message)
     // Message     |     F       |     T      |     T           |     F           |     F
     // int         |     F       |     F      |     F           |     F           |     F
 
-    struct MessageBase : public etl::imessage {};
-    struct Message : public etl::message<1, MessageBase> {};
+    struct MessageBase : public etl::imessage
+    {
+    };
+    struct Message : public etl::message<1, MessageBase>
+    {
+    };
 
 #if ETL_USING_CPP17
     // Is an imessage?
@@ -118,15 +122,21 @@ SUITE(test_message)
   //*************************************************************************
   TEST(test_message_base_type)
   {
-    struct Message1 : public etl::message<1> {};
-    
-    struct MessageBase : public etl::imessage {};
-    struct Message2 : public etl::message<2, MessageBase> {};
+    struct Message1 : public etl::message<1>
+    {
+    };
+
+    struct MessageBase : public etl::imessage
+    {
+    };
+    struct Message2 : public etl::message<2, MessageBase>
+    {
+    };
 
     CHECK_TRUE((std::is_same<etl::imessage, Message1::base_type>::value));
-    CHECK_TRUE((std::is_same<MessageBase,   Message2::base_type>::value));
+    CHECK_TRUE((std::is_same<MessageBase, Message2::base_type>::value));
 
-    CHECK_FALSE((std::is_same<MessageBase,   Message1::base_type>::value));
+    CHECK_FALSE((std::is_same<MessageBase, Message1::base_type>::value));
     CHECK_FALSE((std::is_same<etl::imessage, Message2::base_type>::value));
   }
 }
