@@ -1,57 +1,164 @@
 ---
-#------------------------------------
-# Configuration for clang-format v12
-#------------------------------------
+# Base style — closest built-in starting point
+BasedOnStyle:  LLVM
+Language:      Cpp
+Standard:      Auto          # let the formatter accept any C++ standard
+DisableFormat: false
 
-Language: Cpp
+# =============================================================================
+# Indentation
+# =============================================================================
+UseTab:                            Never
+IndentWidth:                       2
+TabWidth:                          2
+ContinuationIndentWidth:           2
+ConstructorInitializerIndentWidth: 2
+NamespaceIndentation:              All       # everything inside namespace is indented
+AccessModifierOffset:              -2        # public/private/protected at class-brace level
+IndentCaseLabels:                  true     # case labels at switch-body indent level
+IndentCaseBlocks:                  true     # indent block inside case label
+IndentGotoLabels:                  true
+IndentExternBlock:                 Indent
+IndentWrappedFunctionNames:        true     # keep function name at same indent as return type
+IndentPPDirectives:                BeforeHash # nested #if / #include get indented before the #
+PPIndentWidth:                     2
 
-BasedOnStyle: Chromium
+# =============================================================================
+# Braces & line-break style
+# =============================================================================
+BreakBeforeBraces:                    Allman
+BreakConstructorInitializers:         BeforeComma   # colon on new line, commas lead
+BreakInheritanceList:                 BeforeComma
+BreakBeforeBinaryOperators:           NonAssignment
+BreakBeforeTernaryOperators:          true
+BreakStringLiterals:                  false
+AlwaysBreakTemplateDeclarations:      Yes        # template <…> always on its own line
+AlwaysBreakAfterDefinitionReturnType: None  # don't force-break after return type
+BreakAfterAttributes:                 Leave          # preserve existing line breaks after attributes
 
-SortIncludes: true
-IncludeBlocks: Preserve
-IncludeCategories:
-  - Regex:    '^(<|")(.*/)?platform\.h(>|")$'
-    Priority: 1
-  - Regex:    '.*'
-    Priority: 2
+# =============================================================================
+# Short statements
+# =============================================================================
+AllowShortBlocksOnASingleLine:       Empty
+AllowShortFunctionsOnASingleLine:    Empty     # only empty bodies: void f() {}
+AllowShortEnumsOnASingleLine:        true     # enum values each on their own line
+AllowShortCaseLabelsOnASingleLine:   true     # case X: stmt; break; on one line
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine:        true
+AllowShortLambdasOnASingleLine:      Inline
+CompactNamespaces:                   false
 
-BinPackParameters: false
-BitFieldColonSpacing: Both
+# =============================================================================
+# Empty lines
+# =============================================================================
+MaxEmptyLinesToKeep:              1
+KeepEmptyLinesAtEOF:              false
+KeepEmptyLinesAtTheStartOfBlocks: false
+EmptyLineBeforeAccessModifier:    Always    # blank line before public:/private:/protected:
+EmptyLineAfterAccessModifier:     Always    # blank line after  public:/private:/protected:
+SeparateDefinitionBlocks:         Leave     # preserve existing blank-line patterns
+InsertNewlineAtEOF:               true
 
-BreakBeforeBraces: Allman
-BreakConstructorInitializers: BeforeComma
+# =============================================================================
+# Spacing
+# =============================================================================
+SpaceBeforeParens:                 ControlStatements  # if (...), while (...), etc.
+SpacesInParentheses:               false
+SpacesInAngles:                    Leave     # preserve C++03 "> >" vs C++11 ">>"
+SpaceInEmptyParentheses:           false
+SpacesInCStyleCastParentheses:     false
+SpaceAfterCStyleCast:              false
+SpacesInContainerLiterals:         false
+SpacesInSquareBrackets:            false
+SpaceAfterLogicalNot:              false
+SpaceAfterTemplateKeyword:         true      # template <…> (space after keyword)
+SpaceBeforeAssignmentOperators:    true
+SpaceBeforeCpp11BracedList:        false
+SpaceBeforeCtorInitializerColon:   true
+SpaceBeforeInheritanceColon:       true
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets:         false
+BitFieldColonSpacing:              Both      # int x : 4;
 
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-
-AllowAllArgumentsOnNextLine: true
-AllowAllParametersOfDeclarationOnNextLine: true
-
-ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
-ConstructorInitializerIndentWidth: '2'
-
-NamespaceIndentation: All
-IndentPPDirectives: BeforeHash
-PointerAlignment: Left
-ColumnLimit: '0'
-ContinuationIndentWidth: '2'
-UseTab: Never
-TabWidth: '2'
-IndentWidth: '2'
-AccessModifierOffset : '-2'
-IndentCaseLabels: false
-Cpp11BracedListStyle: 'true'
-AlignAfterOpenBracket: Align
+# =============================================================================
+# Alignment
+# =============================================================================
+PointerAlignment:             Left       # T* ptr, const T& ref
+ReferenceAlignment:           Left
+QualifierAlignment:           Leave      # don't reorder const/volatile placement
+AlignConsecutiveAssignments:  true
 AlignConsecutiveDeclarations: true
+AlignConsecutiveBitFields:    true
+AlignConsecutiveMacros:       true       # align macro bodies
+AlignOperands:                Align      # align multi-line operands
+AlignAfterOpenBracket:        Align      # align wrapped args to open paren
+AlignEscapedNewlines:         Right      # backslashes in multi-line macros to the right
+AlignTrailingComments:        true       # align // comments
+  
+# =============================================================================
+# Line length and wrapping
+# =============================================================================
+ColumnLimit:                   0
+ReflowComments:                false      # preserve hand-formatted comment rulers
 
-#------------------------------------
-# Configurations not supported by clang-format v12
-#------------------------------------
-# BreakInheritanceList: AfterComma
-# EmptyLineBeforeAccessModifier: Always
-# EmptyLineAfterAccessModifier: Always
-# ReferenceAlignment: Left
+# =============================================================================
+# Includes
+# =============================================================================
+SortIncludes:                  true      # ISSUE: https://github.com/ETLCPP/etl/issues/1284
+IncludeBlocks:                 Preserve   # don't merge / reorder blocks separated by blanks
+IncludeCategories:
+  # platform.h must always come first
+  - Regex:    '^(<|")(.*/)?platform\.h(>|")$'
+    Priority: -1
+  # everything else gets the default priority (0)
 
-...
+# =============================================================================
+# Arguments, parameters and constructor initialisers
+# =============================================================================
+BinPackArguments:              true       # allow packing args on one line when possible
+BinPackParameters:             true
+PackConstructorInitializers:   Never      # each initialiser on its own line
+
+# =============================================================================
+# Templates and modern C++ syntax
+# =============================================================================
+Cpp11BracedListStyle:          true       # no spaces inside {}
+
+# =============================================================================
+# Namespaces and using declarations
+# =============================================================================
+FixNamespaceComments:          true       # } // namespace etl
+SortUsingDeclarations:         Lexicographic
+
+# =============================================================================
+# Macro-aware formatting
+# =============================================================================
+# ETL-specific macros that should be treated as statement-level constructs
+StatementMacros:
+  - ETL_DECLARE_DEBUG_COUNT
+  - ETL_INCREMENT_DEBUG_COUNT
+  - ETL_DECREMENT_DEBUG_COUNT
+  - ETL_ADD_DEBUG_COUNT
+  - ETL_STATIC_ASSERT
+
+# Macros that behave like attributes or specifiers.
+AttributeMacros:
+  - ETL_NODISCARD
+  - ETL_NORETURN
+  - ETL_DEPRECATED
+
+# Macros that behave like type names
+TypenameMacros:
+  - ETL_OR_STD
+
+# Macros that expand to if-like constructs
+# (intentionally left empty — ETL_ASSERT macros are function-like,
+#  not control-flow-like, so they should not get if-macro treatment)
+#IfMacros: []
+
+# Do not reformat these macros — they contain DSL-like content
+WhitespaceSensitiveMacros:
+  - ETL_ERROR_TEXT
+  - ETL_DECLARE_ENUM_TYPE
+  - ETL_ENUM_TYPE
+  - ETL_END_ENUM_TYPE

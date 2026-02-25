@@ -68,4 +68,4 @@ namespace
       CHECK_NO_THROW(ETL_ASSERT(true, ETL_ERROR_GENERIC("Generic Assert Exception")));
     }
   }
-}
+} // namespace

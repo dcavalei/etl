@@ -33,9 +33,9 @@ SOFTWARE.
 
 #include "platform.h"
 #include "basic_string.h"
-#include "string_view.h"
 #include "hash.h"
 #include "initializer_list.h"
+#include "string_view.h"
 
 #include "private/minmax_push.h"
 
@@ -46,12 +46,12 @@ namespace etl
   {
     inline namespace string_literals
     {
-      inline constexpr etl::wstring_view operator ""_sv(const wchar_t* str, size_t length) ETL_NOEXCEPT
+      inline constexpr etl::wstring_view operator""_sv(const wchar_t* str, size_t length) ETL_NOEXCEPT
       {
-        return etl::wstring_view{ str, length };
+        return etl::wstring_view{str, length};
       }
-    }
-  }
+    } // namespace string_literals
+  } // namespace literals
 #endif
 
   typedef ibasic_string<wchar_t> iwstring;
@@ -215,7 +215,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring& operator = (const wstring& rhs)
+    wstring& operator=(const wstring& rhs)
     {
       if (&rhs != this)
       {
@@ -228,7 +228,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring& operator = (const value_type* text)
+    wstring& operator=(const value_type* text)
     {
       this->assign(text);
 
@@ -238,7 +238,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring& operator = (const etl::wstring_view& view)
+    wstring& operator=(const etl::wstring_view& view)
     {
       this->assign(view);
 
@@ -274,7 +274,7 @@ namespace etl
     typedef iwstring interface_type;
 
     typedef iwstring::value_type value_type;
-    typedef iwstring::size_type size_type;
+    typedef iwstring::size_type  size_type;
 
     //*************************************************************************
     /// Constructor.
@@ -653,7 +653,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring_ext& operator = (const wstring_ext& rhs)
+    wstring_ext& operator=(const wstring_ext& rhs)
     {
       if (&rhs != this)
       {
@@ -666,7 +666,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring_ext& operator = (const iwstring& rhs)
+    wstring_ext& operator=(const iwstring& rhs)
     {
       if (&rhs != this)
       {
@@ -679,7 +679,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring_ext& operator = (const value_type* text)
+    wstring_ext& operator=(const value_type* text)
     {
       this->assign(text);
 
@@ -689,7 +689,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    wstring_ext& operator = (const etl::wstring_view& view)
+    wstring_ext& operator=(const etl::wstring_view& view)
     {
       this->assign(view);
 
@@ -753,8 +753,8 @@ namespace etl
   //***************************************************************************
   /// Make string from string literal or array
   //***************************************************************************
-  template<size_t Array_Size>
-  etl::wstring<Array_Size - 1U> make_string(const wchar_t(&text)[Array_Size])
+  template <size_t Array_Size>
+  etl::wstring<Array_Size - 1U> make_string(const wchar_t (&text)[Array_Size])
   {
     return etl::wstring<Array_Size - 1U>(text, etl::strlen(text, Array_Size - 1U));
   }
@@ -762,12 +762,12 @@ namespace etl
   //***************************************************************************
   /// Make string with max capacity from string literal or array
   //***************************************************************************
-  template<size_t MAX_SIZE, size_t SIZE>
-  etl::wstring<MAX_SIZE> make_string_with_capacity(const wchar_t(&text)[SIZE])
+  template <size_t MAX_SIZE, size_t SIZE>
+  etl::wstring<MAX_SIZE> make_string_with_capacity(const wchar_t (&text)[SIZE])
   {
     return etl::wstring<MAX_SIZE>(text, etl::strlen(text, SIZE));
   }
-}
+} // namespace etl
 
 #include "private/minmax_pop.h"
 

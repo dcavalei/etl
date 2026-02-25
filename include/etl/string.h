@@ -33,9 +33,9 @@ SOFTWARE.
 
 #include "platform.h"
 #include "basic_string.h"
-#include "string_view.h"
 #include "hash.h"
 #include "initializer_list.h"
+#include "string_view.h"
 
 #include <ctype.h>
 
@@ -48,12 +48,12 @@ namespace etl
   {
     inline namespace string_literals
     {
-      inline constexpr etl::string_view operator ""_sv(const char* str, size_t length) ETL_NOEXCEPT
+      inline constexpr etl::string_view operator""_sv(const char* str, size_t length) ETL_NOEXCEPT
       {
-        return etl::string_view{ str, length };
+        return etl::string_view{str, length};
       }
-    }
-  }
+    } // namespace string_literals
+  } // namespace literals
 #endif
 
   typedef etl::ibasic_string<char> istring;
@@ -218,21 +218,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string& operator = (const string& rhs)
-    {
-      if (&rhs != this)
-      {
-        this->assign(rhs);
-      }
-
-      return *this;
-    }
-
-
-    //*************************************************************************
-    /// Assignment operator.
-    //*************************************************************************
-    string& operator = (const istring& rhs)
+    string& operator=(const string& rhs)
     {
       if (&rhs != this)
       {
@@ -245,7 +231,20 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string& operator = (const value_type* text)
+    string& operator=(const istring& rhs)
+    {
+      if (&rhs != this)
+      {
+        this->assign(rhs);
+      }
+
+      return *this;
+    }
+
+    //*************************************************************************
+    /// Assignment operator.
+    //*************************************************************************
+    string& operator=(const value_type* text)
     {
       this->assign(text);
 
@@ -255,7 +254,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string& operator = (const etl::string_view& view)
+    string& operator=(const etl::string_view& view)
     {
       this->assign(view);
 
@@ -294,7 +293,7 @@ namespace etl
     typedef istring interface_type;
 
     typedef istring::value_type value_type;
-    typedef istring::size_type size_type;
+    typedef istring::size_type  size_type;
 
     //*************************************************************************
     /// Constructor.
@@ -673,7 +672,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string_ext& operator = (const string_ext& rhs)
+    string_ext& operator=(const string_ext& rhs)
     {
       if (&rhs != this)
       {
@@ -686,7 +685,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string_ext& operator = (const istring& rhs)
+    string_ext& operator=(const istring& rhs)
     {
       if (&rhs != this)
       {
@@ -699,7 +698,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string_ext& operator = (const value_type* text)
+    string_ext& operator=(const value_type* text)
     {
       this->assign(text);
 
@@ -709,7 +708,7 @@ namespace etl
     //*************************************************************************
     /// Assignment operator.
     //*************************************************************************
-    string_ext& operator = (const etl::string_view& view)
+    string_ext& operator=(const etl::string_view& view)
     {
       this->assign(view);
 
@@ -773,8 +772,8 @@ namespace etl
   //***************************************************************************
   /// Make string from string literal or array
   //***************************************************************************
-  template<size_t Array_Size>
-  etl::string<Array_Size - 1U> make_string(const char(&text)[Array_Size])
+  template <size_t Array_Size>
+  etl::string<Array_Size - 1U> make_string(const char (&text)[Array_Size])
   {
     return etl::string<Array_Size - 1U>(text, etl::strlen(text, Array_Size - 1));
   }
@@ -782,12 +781,12 @@ namespace etl
   //***************************************************************************
   /// Make string with max capacity from string literal or array
   //***************************************************************************
-  template<size_t MAX_SIZE, size_t SIZE>
-  etl::string<MAX_SIZE> make_string_with_capacity(const char(&text)[SIZE])
+  template <size_t MAX_SIZE, size_t SIZE>
+  etl::string<MAX_SIZE> make_string_with_capacity(const char (&text)[SIZE])
   {
     return etl::string<MAX_SIZE>(text, etl::strlen(text, SIZE));
   }
-}
+} // namespace etl
 
 #include "private/minmax_pop.h"
 

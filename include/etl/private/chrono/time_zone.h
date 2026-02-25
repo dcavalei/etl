@@ -65,7 +65,7 @@ namespace etl
     //  }
 
     //  template <typename TDuration>
-    //  etl::chrono::sys_time<etl::common_type_t<TDuration, etl::chrono::seconds>> to_sys(const etl::chrono::local_time<TDuration>& tp, 
+    //  etl::chrono::sys_time<etl::common_type_t<TDuration, etl::chrono::seconds>> to_sys(const etl::chrono::local_time<TDuration>& tp,
     //                                                                                    etl::chrono::choose z) const
     //  {
     //    etl::chrono::sys_time<etl::common_type_t<TDuration, etl::chrono::seconds>>();
@@ -76,5 +76,5 @@ namespace etl
     //  static const char *tz_name;
 
     //};
-  }
-}
+  } // namespace chrono
+} // namespace etl

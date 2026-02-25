@@ -226,4 +226,4 @@ namespace
 #endif
     }
   }
-}
+} // namespace
